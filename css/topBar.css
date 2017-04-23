@@ -1,0 +1,31 @@
+.topBar {
+	width: 100%;
+	background:url("img/TopBar.jpg");
+}
+
+.logo{
+	display: block;
+    margin: 0 auto;
+}
+
+.title{
+	text-align: center;
+	color: white;
+	font-size: 24pt;
+	width: 100%;
+	font-weight: bold;
+}
+
+body {
+	background-color: #1F0C08;
+}
+
+.back
+{
+	height: 50px;
+	padding: 10px;
+}
+
+.menubar{
+	width: 100%;
+}

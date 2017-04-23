@@ -1,0 +1,9 @@
+.formContainer {
+	background:url("img/Background.jpg");
+	width: 250px;
+	padding: 5%;
+	border-radius: 25px;
+	display: table;
+  	margin: 20px auto;
+
+}

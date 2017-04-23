@@ -1,0 +1,12 @@
+.deckLink {
+	background: url("img/deckBack.png");
+	height: 395px;
+	width: 286px;
+	float: left;
+	font-size: 24pt;
+	font-weight: bold;
+	color: white;
+	text-align: center;
+	line-height: 45px;
+	text-shadow: 2px 2px #000000e6;
+}

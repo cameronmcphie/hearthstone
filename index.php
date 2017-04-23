@@ -1,57 +1,50 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<?php
-      // 1. Create a database connection
-      $dbhost = "ecsmysql";
-      $dbuser = "cs332u21";  // where ?? is your id
-      $dbpass = "xahkohth"; // replace with your password
-      $dbname = "cs332u21";
-      $dbconnection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+<!DOCTYPE html>
+<html>
 
-      // Check if the connection is ok
-      if (mysqli_connect_errno()) {
-         die("Database connection failed: " .
-         mysqli_connect_error() . " (" > mysqli_connect_errno() . ")" );
-      }
-   ?>
-<?php
-      // 2. Perform database query
-      $query = "SELECT * ";
-      $query .= "FROM DEPARTMENT";
-      // echo $query;
-      // echo "<br>";
-      $result = mysqli_query($dbconnection, $query);
-      // Check if there is a query error
-      if (!$result) {
-         die("Database query failed.");
-      }
-   ?>
-    <ul>
-   <?php
-      // echo "--- Fetch the data ---";
-      // echo "<br>";
-      echo "Department name";
-      echo "<br>";
-      echo "----------------------";
-      echo "<br>";
-     
-      // 3. Use returned result
-      while ($row = mysqli_fetch_assoc($result)) {
-         // output data from each row
-    ?>
-         <li><?php echo $row["Dname"]; ?></li>
-    <?php
-       }
-    ?>
-  </ul>
+	<head>
+		<title>Homepage</title>
+		<link rel="stylesheet" type="text/css" href="css/topBar.css">
+		<link rel="stylesheet" type="text/css" href="css/homePage.css">
+	</head>
 
-   <?php
-      // 4. Release returned result
-      mysqli_free_result($result);
-   ?>
-
-   <?php
-      // 5. Close the database connection
-      mysqli_close($dbconnection);
-   ?>
+<body>
+	<div class = "topBar">
+		<img class = "logo" src = "css/img/logo.png">
+    	<div class = "title">Deck Builder</div>
+	</div>
+	<div class = "mainContainer">
+		<div class = "leftContainer">
+			<div class = "loginContainer">
+				<div class="formText"><strong>Enter User  Name and Password</strong></div>
+			   <form action="userpwFormProcessing.php" method="post">
+			      Username: <input type="text" name="username" value="" /><br/>
+			      Password: <input type="password" name="password" value="" /><br/>
+			      <br/>
+			      <?php
+			      	parse_str($_SERVER['QUERY_STRING']);
+			      	if (isset($attempt))
+			      	{
+				      	if($attempt == 'failed')
+				      	{
+				     		echo "<strong style = \"color: red\">Your username or password is incorrect!</strong><br/>";
+						}
+					}
+			      ?>
+			      <input class="loginButton" type="submit" name="submit" value="Login"/>
+			   </form>
+				   <a href="createAccount.php") style="text-decoration:none">
+				   	<input class="createButton" type="button" name="createAccount" value="Create Account"/>
+				   </a>
+		   </div>
+		</div>
+		<div class = "rightContainer">
+		<div class="outerContainer">
+			<a href="allCards.php">
+				<div class="allCardsContainer"></div>
+			</a>
+			</div>
+		</div>
+	</div>
+</body>
 </html>
+
