@@ -19,10 +19,11 @@
 		   // Check that the query string is set
 		   if (isset($Pid) && $Pid != '') {
 				// Connect to DB
-				$dbhost = "localhost";
-				$dbuser = "test";  
-				$dbpass = "Eagles79!"; 
-				$dbname = "hearthstone";
+				include("config.php");
+				$dbhost = dbhost;
+				$dbuser = dbuser;  
+				$dbpass = dbpass; 
+				$dbname = dbname;
 				$dbconnection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 				if (mysqli_connect_errno()) {
 		      		die("Database connection failed: " .

@@ -1,9 +1,10 @@
 <?php
    // 1. Create a database connectio
-   $dbhost = "localhost";
-   $dbuser = "test";  
-   $dbpass = "Eagles79!"; 
-   $dbname = "hearthstone";
+   include("config.php");
+   $dbhost = dbhost;
+   $dbuser = dbuser;  
+   $dbpass = dbpass; 
+   $dbname = dbname;
    $dbconnection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
    // Check if the connection is ok
    if (mysqli_connect_errno()) {

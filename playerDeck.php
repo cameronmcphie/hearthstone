@@ -32,10 +32,11 @@
 		</div>
 
 	<?php
-		$dbhost = "localhost";
-		$dbuser = "test";  
-		$dbpass = "Eagles79!"; 
-		$dbname = "hearthstone";
+   include("config.php");
+		$dbhost = dbhost;
+		$dbuser = dbuser;  
+		$dbpass = dbpass; 
+		$dbname = dbname;
 		$dbconnection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 		// 2. Perform database query
 		$query = "SELECT * FROM CARDS WHERE Cid IN (Select Cid FROM IN_DECK WHERE Dnum = $deckNum AND Pid = $Pid);";
