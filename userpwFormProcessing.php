@@ -10,6 +10,22 @@
       die("Database connection failed: " .
       mysqli_connect_error() . " (" > mysqli_connect_errno() . ")" );
    }
+
+   if (isset($_POST["submit"])) {
+      if (isset($_POST["username"])) {
+         $username = $_POST["username"];
+      } else {
+         $username = "unknown";
+       }
+      if (isset($_POST["password"])) {
+         $password = $_POST["password"];
+      } else {
+         $password = "unknown";
+      }
+      header("location: index.php?attempt=failed");
+   } else {
+      header("location: index.php?attempt=failed");
+   }
    $query = "SELECT Pid FROM PLAYER WHERE Uname = '$username' and Pword = '$password'";
    $result = mysqli_query($dbconnection, $query);
    if (!$result) {
