@@ -1,5 +1,5 @@
 <?php
-   // 1. Create a database connectio
+   // 1. Create a database connection
    include("config.php");
    $dbhost = dbhost;
    $dbuser = dbuser;  
@@ -11,7 +11,21 @@
       die("Database connection failed: " .
       mysqli_connect_error() . " (" > mysqli_connect_errno() . ")" );
    }
-
+   if (isset($_POST["submit"])) {
+      if (isset($_POST["username"])) {
+         $username = $_POST["username"];
+      } else {
+      $username = "unknown";
+      }
+      if (isset($_POST["password"])) {
+         $password = $_POST["password"];
+      } else {
+         $password = "unknown";
+      }
+   header("location: index.php?attempt=failed");
+   } else {
+   header("location: index.php?attempt=failed");
+   }
    $query = "INSERT INTO PLAYER (Uname, Pword, NumOfDecks) Values ('$username', '$password', 0)";
    $result = mysqli_query($dbconnection, $query);
    if (!$result) {

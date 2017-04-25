@@ -5,17 +5,29 @@
 		<title>Homepage</title>
 		<link rel="stylesheet" type="text/css" href="css/topBar.css">
 		<link rel="stylesheet" type="text/css" href="css/playerProfile.css">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	</head>
+	<?php
+	parse_str($_SERVER['QUERY_STRING']);
+	?>
 
 <body>
 	<div class = "topBar">
 		<img class = "logo" src = "css/img/logo.png">
-    	<div class = "title">My Decks</div>
+    	<div class = "menuBar">
+			<?php
+			echo "<a class=\"w3-btn w3-ripple w3-red left-button\" href=\"index.php\">Logout</a>"
+			?>
+			<?php
+			echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"createDeck.php?Pid=$Pid\">Create Deck</a>"
+			?>
+		</div>
+		<div class = "title">My Decks</div>
 	</div>
+
 	<div class = "mainContainer">
 		<?php
-			// Parse the query string 
-		   parse_str($_SERVER['QUERY_STRING']);
+			// Parse the query string
 		   // Check that the query string is set
 		   if (isset($Pid) && $Pid != '') {
 				// Connect to DB

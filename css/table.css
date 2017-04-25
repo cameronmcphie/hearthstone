@@ -17,6 +17,8 @@
 	float:left;/*fix for  buggy browsers*/
 	display:table-column;
 	width: 9%;
+	padding-bottom: 2px;
+	padding-top: 2px;
 }
 .cell-description
 {
