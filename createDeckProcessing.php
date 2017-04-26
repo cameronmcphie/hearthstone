@@ -1,4 +1,5 @@
 <?php
+	/*
 	include("config.php");
 	$dbhost = dbhost;
 	$dbuser = dbuser;
@@ -19,5 +20,5 @@
 		die("Database query failed.");
 	}
 
-	
+	*/
 ?>

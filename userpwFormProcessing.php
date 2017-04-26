@@ -23,7 +23,6 @@
       } else {
          $password = "unknown";
       }
-      header("location: index.php?attempt=failed");
    } else {
       header("location: index.php?attempt=failed");
    }
@@ -36,12 +35,10 @@
    $row = mysqli_fetch_assoc($result);
    $userPid = $row["Pid"];
 
-   if($count == 1)
-   {
+   if($count == 1) {
       header("location: playerProfile.php?Pid=$userPid");
    }
-   else
-   {
+   else {
       header("location: index.php?attempt=failed");
    }
    mysqli_free_result($result);

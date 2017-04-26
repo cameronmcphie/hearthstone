@@ -15,6 +15,9 @@
 		$dbpass = dbpass; 
 		$dbname = dbname;
 		$dbconnection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+		$query = "SELECT * FROM CARDS WHERE Cid IN (Select Cid FROM IN_DECK WHERE Dnum = $deckNum AND Pid = $Pid);";
+		$result = mysqli_query($dbconnection, $query);
+		$row = mysqli_fetch_assoc($result);
    ?>
 <body>
    <div class = "topBar">
@@ -24,18 +27,24 @@
 				echo "<a class=\"w3-btn w3-ripple w3-red left-button\" href=\"playerProfile.php?Pid=$Pid\">Back to Decks</a>";
 			?>
 			<?php
-				if (isset($Dclass)) {
-					echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"allCards.php?deckNum=$deckNum&Pid=$Pid&Dclass=$Dclass\">Add Cards</a>";
+				// For handling if all cards are deleted from a deck
+				if ($row == 0 && !isset($_GET["Dclass"])) {
+					echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"createDeck.php?deckNum=$deckNum&Pid=$Pid&deck=exists\">Add Cards</a>";
 				}
 				else {
-					$query = "SELECT Dclass FROM IN_DECK WHERE Pid = $Pid AND Dnum = $deckNum";
-					$result = mysqli_query($dbconnection, $query);
-					if (!$result) {
-					 die("Database query failed.");
+					if (isset($_GET["Dclass"])) {
+						echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"allCards.php?deckNum=$deckNum&Pid=$Pid&Dclass=$Dclass\">Add Cards</a>";
 					}
-					$row = mysqli_fetch_assoc($result);
-					$Dclass = $row["Dclass"];
-					echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"allCards.php?deckNum=$deckNum&Pid=$Pid&Dclass=$Dclass\">Add Cards</a>";
+					else {
+						$query = "SELECT Dclass FROM IN_DECK WHERE Pid = $Pid AND Dnum = $deckNum";
+						$result = mysqli_query($dbconnection, $query);
+						if (!$result) {
+						 die("Database query failed.");
+						}
+						$row = mysqli_fetch_assoc($result);
+						$Dclass = $row["Dclass"];
+						echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"allCards.php?deckNum=$deckNum&Pid=$Pid&Dclass=$Dclass\">Add Cards</a>";
+					}
 				}
 			?>
 			</div>

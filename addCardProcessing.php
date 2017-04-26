@@ -2,7 +2,7 @@
 	parse_str($_SERVER['QUERY_STRING']);
 	// Deck is empty need to pick class again
 	if ($Dclass == "") {
-		header("location: createDeck.php?Pid=$Pid");
+		header("location: createDeck.php?Pid=$Pid&deckNum=$deckNum&deck=exists");
 	}
 	else{
 		include("config.php");
@@ -71,7 +71,7 @@
 			}
 			else {
 			// Release returned result
-			mysqli_free_result($result);
+-			mysqli_free_result($result);
 			// Close the database connection
 			mysqli_close($dbconnection);
 			header("location: allCards.php?deckNum=$deckNum&Pid=$Pid&Dclass=$Dclass&attempt=success");

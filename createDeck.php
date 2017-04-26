@@ -23,7 +23,9 @@
 		$query = "SELECT NumOfDecks FROM PLAYER WHERE Pid = $Pid";
 		$result = mysqli_query($dbconnection, $query);
 		$row = mysqli_fetch_assoc($result);
-		$deckNum = $row["NumOfDecks"] + 1;
+		if (!isset($deck)) {
+			$deckNum = $row["NumOfDecks"] + 1;
+		}
 	?>
 <body>
 	<div class = "topBar">
