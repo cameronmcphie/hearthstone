@@ -15,7 +15,7 @@
 		$dbpass = dbpass; 
 		$dbname = dbname;
 		$dbconnection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
-		$query = "SELECT * FROM CARDS WHERE Cid IN (Select Cid FROM IN_DECK WHERE Dnum = $deckNum AND Pid = $Pid);";
+		$query = "SELECT * FROM CARDS RIGHT JOIN IN_DECK ON CARDS.Cid = IN_DECK.CID WHERE IN_DECK.Pid = $Pid AND IN_DECK.Dnum = $deckNum";
 		$result = mysqli_query($dbconnection, $query);
 		$row = mysqli_fetch_assoc($result);
    ?>
@@ -27,23 +27,29 @@
 				echo "<a class=\"w3-btn w3-ripple w3-red left-button\" href=\"playerProfile.php?Pid=$Pid\">Back to Decks</a>";
 			?>
 			<?php
+				// Check if deck is full
+				if (mysqli_num_rows($result) >= 30) {
+							echo "<div class=\"w3-btn w3-ripple w3-red right-button\">Deck is Full</div>";
+				}
 				// For handling if all cards are deleted from a deck
-				if ($row == 0 && !isset($_GET["Dclass"])) {
+				else if ($row == 0 && !isset($_GET["Dclass"])) {
 					echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"createDeck.php?deckNum=$deckNum&Pid=$Pid&deck=exists\">Add Cards</a>";
 				}
 				else {
+					// Deck is empty need to get the class
 					if (isset($_GET["Dclass"])) {
 						echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"allCards.php?deckNum=$deckNum&Pid=$Pid&Dclass=$Dclass\">Add Cards</a>";
 					}
 					else {
-						$query = "SELECT Dclass FROM IN_DECK WHERE Pid = $Pid AND Dnum = $deckNum";
-						$result = mysqli_query($dbconnection, $query);
-						if (!$result) {
-						 die("Database query failed.");
+						// If deck deck is full
+						if (mysqli_num_rows($result) >= 30) {
+							echo "<div class=\"w3-btn w3-ripple w3-red right-button\">Deck is Full</div>";
 						}
+						else {
 						$row = mysqli_fetch_assoc($result);
 						$Dclass = $row["Dclass"];
 						echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"allCards.php?deckNum=$deckNum&Pid=$Pid&Dclass=$Dclass\">Add Cards</a>";
+						}
 					}
 				}
 			?>
@@ -65,11 +71,7 @@
 			<div class = "cell"><strong>Collection</strong></div>
 			<div class = "cellRemove">&nbsp</div>
 		</div>
-
-	
 	<?php
-		$query = "SELECT * FROM CARDS WHERE Cid IN (Select Cid FROM IN_DECK WHERE Dnum = $deckNum AND Pid = $Pid);";
-		$result = mysqli_query($dbconnection, $query);
       	// 3. Use returned result
       	while ($row = mysqli_fetch_assoc($result)) {
         // output data from each row
@@ -130,83 +132,6 @@
     <?php
        }
     ?>
-    <?php
-		$query = "SELECT Cid FROM IN_DECK WHERE Dnum = $deckNum AND Pid = $Pid AND NumInDeck = 2";
-		$result = mysqli_query($dbconnection, $query);
-			// Check if there is a query error
-		if (!$result) {
-		 die("Database query failed.");
-		}
-		if (mysqli_num_rows($result) > 0)
-		{	
-			$query = "SELECT * FROM CARDS WHERE Cid IN (Select Cid FROM IN_DECK WHERE Dnum = $deckNum AND Pid = $Pid AND NumInDeck = 2)";
-			$result = mysqli_query($dbconnection, $query);
-			// Check if there is a query error
-			if (!$result) {
-			 die("Database query failed.");
-			}
-			while ($row = mysqli_fetch_assoc($result)) {
-	?>
-	<div class = "row">
-			<div class = "cell"><?php echo $row["Cname"]; ?></div>
-			<div class = "cell"><?php echo $row["Mana"]; ?></div>
-			<?php 
-			if ($row["Health"] != -1) {
-				echo "<div class = \"cell\">";
-				echo $row["Health"];
-				echo "</div>";
-			}
-			else {
-				echo "<div class = \"cell\">&nbsp</div>";
-			}
-			?>
-			<?php 
-			if ($row["Attack"] != -1) {
-				echo "<div class = \"cell\">";
-				echo $row["Attack"];
-				echo "</div>";
-			}
-			else {
-				echo "<div class = \"cell\">&nbsp</div>";
-			}
-			?>
-			<?php 
-			if (!$row["Subtype"] == '') {
-				echo "<div class = \"cell\">";
-				echo $row["Subtype"];
-				echo "</div>";
-			}
-			else {
-				echo "<div class = \"cell\">&nbsp</div>";
-			}
-			?>
-			<?php 
-			if (!$row["Description"] == '') {
-				echo "<div class = \"cell-description\">";
-				echo $row["Description"];
-				echo "</div>";
-			}
-			else {
-				echo "<div class = \"cell-description\">&nbsp</div>";
-			}
-			?>
-			<div class = "cell"><?php echo $row["Class"]; ?></div>
-			<div class = "cell"><?php echo $row["Rarity"]; ?></div>
-			<div class = "cell"><?php echo $row["Collection"]; ?></div>
-			<?php 
-			$cidString = $row["Cid"];
-			echo "<a href=\"removeCard.php?Cid=$cidString&Pid=$Pid&deckNum=$deckNum\">"; 
-			?>
-				<div class="cell-edit"><img class="edit" src="css/img/removeButton.png"/></div>
-			</a>
-		</div>
-
-	<?php 
-		}
-	} 
-	?>
-	</div>
-
    <?php
       // Release returned result
       mysqli_free_result($result);
