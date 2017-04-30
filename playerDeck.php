@@ -72,9 +72,10 @@
 			<div class = "cellRemove">&nbsp</div>
 		</div>
 	<?php
+		$query = "SELECT * FROM CARDS RIGHT JOIN IN_DECK ON CARDS.Cid = IN_DECK.CID WHERE IN_DECK.Pid = $Pid AND IN_DECK.Dnum = $deckNum";
+		$result = mysqli_query($dbconnection, $query);
       	// 3. Use returned result
-		$numOfRows = mysqli_num_rows($result);
-      	for ($i = 0; $i < $numOfRows; $i++) {
+      	while($row = mysqli_fetch_assoc($result)) {
         // output data from each row
     ?>
 		<div class = "row">
@@ -131,7 +132,6 @@
 			</a>
 		</div>
     <?php
-    		$row = mysqli_fetch_assoc($result);
        }
     ?>
    <?php
