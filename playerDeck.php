@@ -31,14 +31,19 @@
 				if (mysqli_num_rows($result) >= 30) {
 							echo "<div class=\"w3-btn w3-ripple w3-red right-button\">Deck is Full</div>";
 				}
-				// For handling if all cards are deleted from a deck
-				else if ($row == 0 && !isset($_GET["Dclass"])) {
+				// For handling class of the deck is not set
+				else if (!isset($_GET["Dclass"])) {
 					echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"createDeck.php?deckNum=$deckNum&Pid=$Pid&deck=exists\">Add Cards</a>";
 				}
 				else {
-					// Deck is empty need to get the class
+					// Deck is empty need to get the class or no cards in deck have a class
 					if (isset($_GET["Dclass"])) {
-						echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"allCards.php?deckNum=$deckNum&Pid=$Pid&Dclass=$Dclass\">Add Cards</a>";
+						if ($Dclass == "") {
+							echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"createDeck.php?deckNum=$deckNum&Pid=$Pid&deck=exists\">Add Cards</a>";
+						}
+						else {
+							echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"allCards.php?deckNum=$deckNum&Pid=$Pid&Dclass=$Dclass\">Add Cards</a>";
+						}
 					}
 					else {
 						// If deck deck is full
