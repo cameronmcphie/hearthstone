@@ -65,7 +65,7 @@
 					header("location: allCards.php?Pid=$Pid&Dnum=$deckNum&attempt=failed");
 				}
 				else {
-				header("location: allCards.php?deckNum=$.ddeckNum&Pid=$Pid&Dclass=$Dclass&attempt=success");
+				header("location: allCards.php?deckNum=$ddeckNum&Pid=$Pid&Dclass=$Dclass&attempt=success");
 				}
 			}
 			else {

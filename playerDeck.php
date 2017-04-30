@@ -73,7 +73,8 @@
 		</div>
 	<?php
       	// 3. Use returned result
-      	while ($row = mysqli_fetch_assoc($result)) {
+		$numOfRows = mysqli_num_rows($result);
+      	for ($i = 0; $i < $numOfRows; $i++) {
         // output data from each row
     ?>
 		<div class = "row">
@@ -130,6 +131,7 @@
 			</a>
 		</div>
     <?php
+    		$row = mysqli_fetch_assoc($result);
        }
     ?>
    <?php
