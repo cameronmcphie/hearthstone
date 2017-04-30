@@ -17,7 +17,6 @@
 		$dbconnection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 		$query = "SELECT * FROM CARDS RIGHT JOIN IN_DECK ON CARDS.Cid = IN_DECK.CID WHERE IN_DECK.Pid = $Pid AND IN_DECK.Dnum = $deckNum";
 		$result = mysqli_query($dbconnection, $query);
-		$row = mysqli_fetch_assoc($result);
    ?>
 <body>
    <div class = "topBar">
@@ -33,10 +32,20 @@
 				}
 				// For handling class of the deck is not set
 				else if (!isset($_GET["Dclass"])) {
-					echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"createDeck.php?deckNum=$deckNum&Pid=$Pid&deck=exists\">Add Cards</a>";
+					$Dclass = '';
+					while ($row = mysqli_fetch_assoc($result)) {
+						if ($row["Dclass"] != 'Neutral') {
+							$Dclass = $row["Dclass"];
+						}
+					}
+					if ($Dclass != '') {
+						echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"allCards.php?deckNum=$deckNum&Pid=$Pid&Dclass=$Dclass\">Add Cards</a>";
+					}
+					else {
+						echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"createDeck.php?deckNum=$deckNum&Pid=$Pid&deck=exists\">Add Cards</a>";
+					}
 				}
 				else {
-					// Deck is empty need to get the class or no cards in deck have a class
 					if (isset($_GET["Dclass"])) {
 						if ($Dclass == "") {
 							echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"createDeck.php?deckNum=$deckNum&Pid=$Pid&deck=exists\">Add Cards</a>";
@@ -51,8 +60,12 @@
 							echo "<div class=\"w3-btn w3-ripple w3-red right-button\">Deck is Full</div>";
 						}
 						else {
-						$row = mysqli_fetch_assoc($result);
-						$Dclass = $row["Dclass"];
+						$result = mysqli_query($dbconnection, $query);
+						while ($row = mysqli_fetch_assoc($result)) {
+							if ($row["Dclass"] != 'Neutral') {
+								$Dclass = $row["Dclass"];
+							}
+						}
 						echo "<a class=\"w3-btn w3-ripple w3-green right-button\" href=\"allCards.php?deckNum=$deckNum&Pid=$Pid&Dclass=$Dclass\">Add Cards</a>";
 						}
 					}
